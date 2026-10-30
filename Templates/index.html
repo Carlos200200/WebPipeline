@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Resultado del Conteo</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; background-color: #f4f4f9; color: #333; }
+        h1 { color: #2c3e50; text-align: center; }
+        .card { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); max-width: 500px; margin: 20px auto; text-align: center; }
+        .numero { font-size: 48px; font-weight: bold; color: #2ecc71; margin: 20px 0; }
+        .archivo-nombre { font-style: italic; color: #7f8c8d; word-break: break-all; }
+        .error-card { border-top: 5px solid #e74c3c; }
+        .error-mensaje { color: #c0392b; font-weight: bold; }
+        .tabla-contenedor {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+        }
+        table {
+            width: auto;
+            margin: 0 auto; /* El 'auto' centra horizontalmente cualquier elemento de bloque */
+            border-collapse: collapse;
+            text-align: left;
+        }
+        th {
+            background-color: #f1f5f9;
+            color: #475569;
+            font-weight: 600;
+            padding: 14px 20px;
+            font-size: 14px;
+            border-bottom: 2px solid #e2e8f0;
+            text-align: center; 
+        }
+        td {
+            padding: 12px 20px;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 15px;
+            text-align: center; 
+        }
+
+        .mi-formulario {
+            width: 300px;
+            margin: 0 auto; /* El 'auto' a la izquierda y derecha centra el bloque */
+        }
+    </style>
+</head>
+<body>
+    <h1>📊 Contador de Palabras </h1>
+
+    <h1>Sube tu archivo .txt para analizar la frecuencia de palabras</h1>
+    
+    <form class="mi-formulario" method="POST" enctype="multipart/form-data">
+        <input type="file" name="archivo_txt" accept=".txt" required>
+        <button type="submit">Analizar archivo</button>
+    </form>
+
+    <div class="card">
+        {% if resultado %}
+            <h3>Archivo procesado:</h3>
+            <p class="archivo-nombre">"{{ resultado.filename }}"</p>
+            <hr style="border: 0; border-top: 1px solid #eee;">
+            <p>Total de palabras encontradas:</p>
+            <div class="tabla-contenedor">
+                <table border="1" cellpadding="5" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Palabra</th>
+                            <th>Frecuencia</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for palabra, conteo in resultado.items() %}
+                        <tr>
+                            <td>{{ palabra }}</td>
+                            <td>{{ conteo }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>    
+            </div>
+        {% endif %}
+
+        {% if error %}
+            <div class="error-card">
+                <h3 class="error-mensaje">⚠️ Error en la ejecución</h3>
+                <p>{{ error }}</p>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
