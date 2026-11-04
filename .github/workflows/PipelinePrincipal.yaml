@@ -1,0 +1,29 @@
+# WebPipeline principal
+# Lo que hay:
+# - Pruebas Unitarias Test.py
+
+name: Python CI Pipeline
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  unit-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descarga Repo
+        uses: actions/checkout@v4
+  
+      # Configurar la ver de python
+      - name: Config Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+  
+      # Fase 1: Pruebas unitarias
+      - name: Instalar pytest
+        run: pip install pytest
+      - name: Pruebas Unitarias Python
+        run: pytest Test_Count
