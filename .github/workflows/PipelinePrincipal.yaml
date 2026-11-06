@@ -41,7 +41,7 @@ jobs:
       - name: Instalar pytest
         run: pip install pytest
       - name: Pruebas Unitarias Python
-        run: pytest Test_Count
+        run: pytest Test_Count.py
 
   # ----------------------------------------------------------
   # Trabajo 2: Construcción y envio de la imagen docker a GHCR
