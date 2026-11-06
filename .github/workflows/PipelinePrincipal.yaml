@@ -24,7 +24,7 @@ jobs:
   # ----------------------------------------------------------
   # Trabajo 1: Pruebas Unitarias (Python)
   # ----------------------------------------------------------
-  unit-tests:
+  Pruebas-Unitarias:
     runs-on: ubuntu-latest
 
     steps:
@@ -49,7 +49,7 @@ jobs:
   Construir-Imagen:
     runs-on: ubuntu-latest
     # Condicionales del job
-    needs: unit-tests
+    needs: Pruebas-Unitarias
 
     steps:
       - name: Descarga Repo
@@ -58,9 +58,9 @@ jobs:
       - name: Iniciar sesion en GHCR
         uses: docker/login-action@v3
         with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          registry: ${{ env.REGISTRY }} # Esta en variable por si cambia a donde guardar las imagenes
+          username: ${{ github.actor }} # No necesario es user, puede ser un bot
+          password: ${{ secrets.GITHUB_TOKEN }} # Es unico por el flujo y caduca cuando este termina
 
       # Docker container no permite nombres en Mayuscula
       - name: Formatear nombre de imagen a minusculas
